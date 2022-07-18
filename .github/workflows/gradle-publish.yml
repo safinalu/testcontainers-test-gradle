@@ -29,9 +29,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Gradle build
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/gradle-build-action@v2.2.1
       with:
-        gradle-version: 7.5.0
+        gradle-version: current
     - run: gradle build    
     
     - name: Get Test Results history
