@@ -1,0 +1,1 @@
+{"eac273e2302f860bb0f4a375ce5c9b1e":{"statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1},"items":[{"uid":"cc8117466c59f788","reportUrl":"https://safinalu.github.io/testcontainers-test-gradle/17//#testresult/cc8117466c59f788","status":"passed","time":{"start":1658220324324,"stop":1658220337754,"duration":13430}}]}}
