@@ -36,6 +36,13 @@ public class TestContainerDemoTest {
                         .withQueryStringParameter("name", "peter"))
                 .respond(response()
                         .withBody("Peter the person!"));
+
+        mockServerClient
+                .when(request()
+                        .withPath("/person")
+                        .withQueryStringParameter("name", "jack"))
+                .respond(response()
+                        .withBody("Jack is here!"));
     }
 
     @AfterEach
@@ -45,10 +52,7 @@ public class TestContainerDemoTest {
     }
 
     @Test
-    public void mockServerTest() throws IOException, InterruptedException {
-
-
-        System.out.println(mockServer.getHost());
+    public void mockServerTest1() throws IOException, InterruptedException {
 
         java.net.http.HttpRequest request = java.net.http.HttpRequest.newBuilder()
                 .uri(URI.create("http://" + mockServer.getHost() + ":" + mockServer.getServerPort() + "/person?name=peter"))
@@ -63,6 +67,25 @@ public class TestContainerDemoTest {
         System.out.println(response.body());
 
         assertThat("Name received", response.body(), equalTo("Peter the person!"));
+
+    }
+
+    @Test
+    public void mockServerTest2() throws IOException, InterruptedException {
+
+        java.net.http.HttpRequest request = java.net.http.HttpRequest.newBuilder()
+                .uri(URI.create("http://" + mockServer.getHost() + ":" + mockServer.getServerPort() + "/person?name=jack"))
+                .GET()
+                .build();
+
+        java.net.http.HttpResponse<String> response = java.net.http.HttpClient
+                .newBuilder()
+                .build()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println(response.body());
+
+        assertThat("Name received", response.body(), equalTo("Jack is here!"));
 
     }
 }
