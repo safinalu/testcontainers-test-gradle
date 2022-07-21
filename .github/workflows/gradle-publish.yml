@@ -89,3 +89,14 @@ jobs:
         name: JUnit Test results            # Name of the check run which will be created
         path: build/test-results/test/TEST-*.xml    # Path to test results
         reporter: java-junit        # Format of test results
+        
+    - name: Push Wiki Changes
+      uses: Andrew-Chen-Wang/github-wiki-action@v3
+      env:
+        # Make sure you have that / at the end. We use rsync 
+        # WIKI_DIR's default is wiki/
+        WIKI_DIR: allure-report/
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_MAIL: ${{ secrets.YOUR_EMAIL }}
+        GH_NAME: ${{ github.repository_owner }}
+
