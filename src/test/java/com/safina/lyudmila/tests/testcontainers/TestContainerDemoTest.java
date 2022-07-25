@@ -85,7 +85,7 @@ public class TestContainerDemoTest {
 
         System.out.println(response.body());
 
-        assertThat("Name received", response.body(), equalTo("Jack is here!"));
+        assertThat("Name received", response.body(), equalTo("Jack is here njkdias"));
 
     }
 }
