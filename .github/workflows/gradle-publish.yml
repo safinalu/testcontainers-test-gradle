@@ -12,7 +12,8 @@ on:
   
   pull_request:
     branches: [ "main" ]
-    
+  workflow_dispatch:
+  
 jobs:
   build:
 
@@ -104,4 +105,9 @@ jobs:
       with:
         name: allure-report_${{ github.run_number }}
         path: allure-report/
+    - name: HTML Preview
+      id: html_preview
+      uses: pavi2410/html-preview-action@v2
+      with:
+        html_file: 'allure-report/aindex.html'
 
