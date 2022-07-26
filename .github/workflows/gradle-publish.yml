@@ -110,5 +110,5 @@ jobs:
       if: success() || failure() 
       uses: pavi2410/html-preview-action@v2
       with:
-        html_file: 'allure-report/aindex.html'
+        html_file: 'allure-report/index.html'
 
