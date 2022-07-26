@@ -111,4 +111,9 @@ jobs:
       uses: pavi2410/html-preview-action@v2
       with:
         html_file: 'allure-report/index.html'
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2.0.0-beta.3
+      if: always()
+      with:
+        files: "test-results/**/*.xml"
 
