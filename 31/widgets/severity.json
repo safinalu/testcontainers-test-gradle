@@ -1,0 +1,1 @@
+[{"uid":"4e224b5f2e02d552","name":"mockServerTest2()","time":{"start":1658841281072,"stop":1658841283142,"duration":2070},"status":"failed","severity":"normal"},{"uid":"bf6582ca21fd76d6","name":"mockServerTest1()","time":{"start":1658841266746,"stop":1658841281046,"duration":14300},"status":"passed","severity":"normal"}]
