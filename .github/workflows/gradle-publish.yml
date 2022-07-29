@@ -5,12 +5,14 @@
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
-name: Java CI with Gradle
+name: A first job Java CI with Gradle
 
 on:
-  workflow_run:
-    workflows: [CodeQL]
-    types: [completed]
+  push:
+    branches: [main, stable, 'release/**']
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [main, stable, 'release/**']
   workflow_dispatch:
   
 jobs:
