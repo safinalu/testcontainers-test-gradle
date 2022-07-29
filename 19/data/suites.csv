@@ -1,3 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Tue Jul 19 08:55:01 GMT 2022","Tue Jul 19 08:55:03 GMT 2022","1868","","com.safina.lyudmila.tests.testcontainers.TestContainerDemoTest","","com.safina.lyudmila.tests.testcontainers.TestContainerDemoTest","mockServerTest2","mockServerTest2()",""
-"passed","Tue Jul 19 08:54:47 GMT 2022","Tue Jul 19 08:55:01 GMT 2022","13396","","com.safina.lyudmila.tests.testcontainers.TestContainerDemoTest","","com.safina.lyudmila.tests.testcontainers.TestContainerDemoTest","mockServerTest1","mockServerTest1()",""
