@@ -88,4 +88,10 @@ public class TestContainerDemoTest {
         assertThat("Name received", response.body(), equalTo("Jack is here njkdias"));
 
     }
+    
+    @Test
+    public void mockServerTest3() throws IOException, InterruptedException {
+        assertThat("Name received", "Abc", equalTo("Jack is here njkdias"));
+
+    }
 }
