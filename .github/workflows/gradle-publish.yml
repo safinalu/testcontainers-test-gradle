@@ -8,10 +8,9 @@
 name: Java CI with Gradle
 
 on:
-  push:
-  
-  pull_request:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: [CodeQL]
+    types: [completed]
   workflow_dispatch:
   
 jobs:
@@ -31,89 +30,11 @@ jobs:
       with:
         gradle-version: current
     - run: gradle build    
-    
-    - name: Get Test Results history
-      uses: actions/checkout@v3
-      if: always()
-      continue-on-error: true
-      with:
-        ref: gh-pages
-        path: gh-pages
-        persist-credentials: false
-        fetch-depth: 0
 
-    - name: Create Test Results History
-      uses: PavanMudigonda/allure-html-reporter-github-pages@v1.0
-      if: always()
-      id: allure-report
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        WORKFLOW_ID: main.yml
-        allure_results: build/allure-results
-        gh_pages: gh-pages
-        allure_report: allure-report
-        allure_history: allure-history
-        
-    - name: Enforce permission requirement
-      uses: prince-chrismc/check-actor-permissions-action@v2
-      with:
-        permission: write
-
-    - name: Deploy report to Github Pages
-      if: always()
-      uses: peaceiris/actions-gh-pages@v3.7.3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages
-        publish_dir: allure-history
-        
-    - name: Post the link to the report
-      if: always()
-      uses: Sibz/github-status-action@v1
-      with: 
-          authToken: ${{secrets.GITHUB_TOKEN}}
-          context: 'Test Results Link'
-          state: 'success'
-          sha: ${{ github.sha }}
-          target_url: https://safinalu.github.io/testcontainers-test-gradle/${{ github.run_number }}
-          
-    - name: Publish Test Report
-      uses: mikepenz/action-junit-report@v3.2.0
-      if: always() # always run even if the previous step fails
-      with:
-        report_paths: '**/build/test-results/test/TEST-*.xml'
-
-    - name: Test Report - JUnit table
+    - name: Publish Test Report - JUnit table
       uses: dorny/test-reporter@v1.5.0
-      if: success() || failure()    # run this step even if previous step failed
+      if: always()    # run this step even if previous step failed
       with:
         name: JUnit Test results            # Name of the check run which will be created
         path: build/test-results/test/TEST-*.xml    # Path to test results
         reporter: java-junit        # Format of test results
-        
-    - name: Push Wiki Changes
-      uses: Andrew-Chen-Wang/github-wiki-action@v3
-      env:
-        # Make sure you have that / at the end. We use rsync 
-        # WIKI_DIR's default is wiki/
-        WIKI_DIR: allure-report/
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_MAIL: ${{ secrets.GH_MAIL }}
-        GH_NAME: ${{ github.repository_owner }}
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v3.1.0
-      with:
-        name: allure-report_${{ github.run_number }}
-        path: allure-report/
-    - name: HTML Preview
-      id: html_preview
-      if: success() || failure() 
-      uses: pavi2410/html-preview-action@v2
-      with:
-        html_file: 'allure-report/index.html'
-    - name: Publish Unit Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v2.0.0-beta.3
-      if: always()
-      with:
-        files: "build/test-results/**/*.xml"
-
