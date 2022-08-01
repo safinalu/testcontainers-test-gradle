@@ -47,12 +47,19 @@ jobs:
         gradle-version: 7.4.2
         arguments: allureReport
 
-    - name: Upload a Build Artifact - allure report
+    - name: Combine allure report in one html file
+      uses: gradle/gradle-build-action@v2.2.1
+      if: always()
+      with:
+        gradle-version: 7.4.2
+        arguments: runGenerateAllureHtml
+
+    - name: Upload allure report in artifacts
       uses: actions/upload-artifact@v3.1.0
       if:   always()
       with:
-        name: allure-report_${{ github.run_number }}_${{ steps.time.outputs.time }}
-        path: build/reports/allure-report/
+        name: allure-report-date-${{ steps.time.outputs.time }}-run-${{ github.run_number }}
+        path: build/reports/allure-html/complete.html
 
     - name: Publish Test Report - JUnit table
       uses: dorny/test-reporter@v1.5.0
