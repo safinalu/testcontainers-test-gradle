@@ -32,15 +32,6 @@ jobs:
       with:
         gradle-version: current
     - run: gradle build    
-
-    - name: Publish Test Report - JUnit table
-      uses: dorny/test-reporter@v1.5.0
-      if: always()    # run this step even if previous step failed
-      with:
-        name: JUnit Test results            # Name of the check run which will be created
-        path: build/test-results/test/TEST-*.xml    # Path to test results
-        reporter: java-junit        # Format of test results
-
     - name: Get Time
       id: time
       uses: nanzm/get-time-action@v1.1
@@ -57,6 +48,15 @@ jobs:
 
     - name: Upload a Build Artifact - allure report
       uses: actions/upload-artifact@v3.1.0
+      if:   always()
       with:
         name: allure-report_${{ github.run_number }}_${{ steps.time.outputs.time }}
         path: build/reports/allure-report/
+
+    - name: Publish Test Report - JUnit table
+      uses: dorny/test-reporter@v1.5.0
+      if: always()    # run this step even if previous step failed
+      with:
+        name: JUnit Test results            # Name of the check run which will be created
+        path: build/test-results/test/TEST-*.xml    # Path to test results
+        reporter: java-junit        # Format of test results
