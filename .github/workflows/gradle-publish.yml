@@ -42,6 +42,7 @@ jobs:
         
     - name: Gradle generate allure report
       uses: gradle/gradle-build-action@v2.2.1
+      if:   always()
       with:
         gradle-version: 7.4.2
         arguments: allureReport
