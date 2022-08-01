@@ -34,18 +34,15 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Gradle build
-      uses: gradle/gradle-build-action@v2.2.1
+    - name: Gradle build & generate allure report
+    - uses: gradle/gradle-build-action@v2.2.1
       with:
         gradle-version: 7.4.2
-    - run: gradle build    
-
-    - name: Gradle generate allure report
-      uses: gradle/gradle-build-action@v2.2.1
-      if:   always()
+        arguments: build   
+    - uses: gradle/gradle-build-action@v2.2.1
       with:
-       gradle-version: 7.4.2
-    - run: gradle allureReport
+        gradle-version: 7.4.2
+        arguments: allureReport
 
     - name: Upload a Build Artifact - allure report
       uses: actions/upload-artifact@v3.1.0
