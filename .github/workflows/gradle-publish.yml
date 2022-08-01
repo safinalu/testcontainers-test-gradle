@@ -40,3 +40,23 @@ jobs:
         name: JUnit Test results            # Name of the check run which will be created
         path: build/test-results/test/TEST-*.xml    # Path to test results
         reporter: java-junit        # Format of test results
+
+    - name: Get Time
+      id: time
+      uses: nanzm/get-time-action@v1.1
+      with:
+        timeZone: 0
+        format: 'YYYY-MM-DD-HH-mm-ss'
+
+    - name: Gradle generate allure report
+      uses: gradle/gradle-build-action@v2.2.1
+      if:   always()
+      with:
+       gradle-version: 7.4.2
+    - run: gradle allureReport
+
+    - name: Upload a Build Artifact - allure report
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: allure-report_${{ github.run_number }}_${{ steps.time.outputs.time }}
+        path: build/reports/allure-report/
