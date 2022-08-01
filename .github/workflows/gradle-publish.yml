@@ -34,11 +34,12 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Gradle build & generate allure report
+    - name: Gradle build
     - uses: gradle/gradle-build-action@v2.2.1
       with:
         gradle-version: 7.4.2
         arguments: build   
+    - name: Gradle generate allure report
     - uses: gradle/gradle-build-action@v2.2.1
       with:
         gradle-version: 7.4.2
